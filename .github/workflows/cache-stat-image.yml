@@ -46,7 +46,7 @@ jobs:
   pushstats:
     permissions: write-all
     runs-on: ubuntu-latest
-    name: Push
+    name: Push Stats
     needs: [stats] # Put any jobs (card) needed here before we push
     steps:
       - uses: actions/download-artifact@master
@@ -64,7 +64,7 @@ jobs:
   pushlangs:
     permissions: write-all
     runs-on: ubuntu-latest
-    name: Push
+    name: Push Langs
     needs: [langs] # Put any jobs (card) needed here before we push
     steps:
       - uses: actions/download-artifact@master
@@ -74,7 +74,7 @@ jobs:
       - name: Push
         uses: crazy-max/ghaction-github-pages@v3
         with:
-          target_branch: resource/grs # May change to your desired branch name, the final URL need to be updated if you change this
+          target_branch: resource/lang # May change to your desired branch name, the final URL need to be updated if you change this
           build_dir: grs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
