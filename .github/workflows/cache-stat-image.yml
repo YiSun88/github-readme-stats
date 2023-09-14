@@ -24,16 +24,35 @@ jobs:
           name: stats
           path: grs
 
+  langs:
+    permissions: write-all
+    runs-on: ubuntu-latest
+    name: Langs Card
+    steps:
+      - uses: actions/checkout@v3
+        name: Check out current commit
+      - uses: suisei-cn/actions-download-file@v1.3.0
+        id: langs
+        name: Download the langs file
+        with:
+          url: "https://github-readme-stats-beryl-beta-73.vercel.app/api/top-langs/?username=YiSun88&hide_progress=true&hide=java&theme=dark&hide_border=true" # Put your own vercel instance URL here
+          target: grs
+          filename: langs.svg # Need to have the file name prepared as svg
+      - uses: actions/upload-artifact@master
+        with:
+          name: langs
+          path: grs
+
   push:
     permissions: write-all
     runs-on: ubuntu-latest
     name: Push
-    needs: [stats] # Put any jobs (card) needed here before we push
+    needs: [stats, langs] # Put any jobs (card) needed here before we push
     steps:
       - uses: actions/download-artifact@master
         with:
-          name: stats
-          path: grs
+          name: stats langs
+          path: grs grs
       - name: Push
         uses: crazy-max/ghaction-github-pages@v3
         with:
@@ -41,3 +60,5 @@ jobs:
           build_dir: grs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
